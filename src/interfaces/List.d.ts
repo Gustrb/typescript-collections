@@ -1,6 +1,6 @@
 /**
  * Generic list, can be used to store any type of data
- * Based on https://docs.oracle.com/javase/7/docs/api/java/util/List.html
+ * based on https://docs.oracle.com/javase/7/docs/api/java/util/List.html
  */
 
 export interface List<T> {
@@ -22,34 +22,31 @@ export interface List<T> {
   clear(): void;
 
   // Returns true if this list contains the specified element.
-  contains(object: Object): boolean;
+  contains(object: T): boolean;
 
   // Returns true if this list contains all of the elements of the specified collection.
   containsAll(collection: T[]): boolean
-
-  // Compares the specified object with this list for equality.
-  equals(obj: Object): boolean;
 
   // Returns the element at the specified position in this list.
   get(index: number): T;
 
   // Returns the index of the first occurrence of the specified element
   // in this list, or -1 if this list does not contain the element.
-  indexOf(obj: Object ): number;
+  indexOf(obj: T ): number;
 
   // Returns true if this list contains no elements.
   isEmpty(): boolean;
 
   // Returns the index of the last occurrence of the specified element in this list,
   // or -1 if this list does not contain the element.
-  lastIndexOf(obj: Object): number;
+  lastIndexOf(obj: T): number;
 
   // Removes the element at the specified position in this list (optional operation).
   removeFromIndex(index: number): T;
 
   // Removes the first occurrence of the specified element from this list, if it is present
   // (optional operation).
-  remove(obj: Object): boolean;
+  remove(obj: T): boolean;
 
   // Removes from this list all of its elements that are contained in the
   // specified collection (optional operation).

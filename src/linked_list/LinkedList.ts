@@ -1,79 +1,241 @@
 import { List } from "../interfaces/List";
 
+class Node<T> {
+  public value: T;
+  public next: Node<T>;
+}
+
 export class LinkedList<T> implements List<T> {
-  add(element: T): boolean {
-    throw new Error("Method not implemented.");
+  private head: Node<T>;
+  private tail: Node<T>;
+  private length: number;
+
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
   }
 
-  addByIndex(index: number, element: T): void {
-    throw new Error("Method not implemented.");
+  public add(element: T) {
+    const node = new Node<T>();
+    node.value = element;
+
+    this.length++;
+
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+
+      return true;
+    }
+
+    this.tail.next = node;
+    this.tail = node;
+    return true;
   }
 
-  addAll(elements: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public addByIndex(index: number, element: T) {
+    if (this.indexOutOfBounds(index)) {
+      throw new Error("Index out of bounds");
+    }
+
+    // create the new node
+    const newNode = new Node<T>();
+    newNode.value = element;
+
+    this.length++;
+
+    // if the index is 0, add the new node to the head
+    if (index === 0) {
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+
+    // if the index is the same as the length, add the new node to the tail
+    if (index === this.length) {
+      this.tail.next = newNode;
+      this.tail = newNode;
+    }
+
+    // if the index is in the middle, add the new node to the middle
+    let currentNode = this.head;
+
+    for (let i = 0; i < index - 1; i++) {
+      currentNode = currentNode.next;
+    }
+
+    let aux = currentNode.next;
+
+    currentNode.next = newNode;
+    newNode.next = aux;
   }
 
-  addAllFromIndex(index: number, elements: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public addAll(elements: T[]) {
+    elements.forEach(element => this.add(element));
+    return true;
   }
 
-  clear(): void {
-    throw new Error("Method not implemented.");
+  public addAllFromIndex(index: number, elements: T[]) {
+    if (index < 0) {
+      throw new Error("Index out of bounds");
+    }
+
+    let actualIndex = index;
+    elements.forEach(element => {
+      this.addByIndex(actualIndex++, element)
+    });
+    return true;
   }
 
-  contains(object: Object): boolean {
-    throw new Error("Method not implemented.");
+  clear() {
+    this.length = 0;
+    this.head = null;
+    this.tail = null;
   }
 
-  containsAll(collection: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public contains(object: T) {
+    const contained = this.toArray().includes(object);
+    return contained;
   }
 
-  equals(obj: Object): boolean {
-    throw new Error("Method not implemented.");
+  public containsAll(collection: T[]) {
+    const contains = collection.every(element => this.contains(element));
+    return contains;
   }
 
-  get(index: number): T {
-    throw new Error("Method not implemented.");
+  public get(index: number): T {
+    if (this.indexOutOfBounds(index)) {
+      throw new Error("Index out of bounds");
+    }
+
+    let currentNode = this.head;
+
+    for (let i = 0; i < index; i++) {
+      currentNode = currentNode.next;
+    }
+
+    return currentNode.value;
   }
 
-  indexOf(obj: Object): number {
-    throw new Error("Method not implemented.");
+  private indexOutOfBounds(index: number) {
+    return index < 0 || index >= this.length;
   }
 
-  isEmpty(): boolean {
-    throw new Error("Method not implemented.");
+  public indexOf(object: T) {
+    const index = this.toArray().findIndex(element => element === object);
+    return index;
   }
 
-  lastIndexOf(obj: Object): number {
-    throw new Error("Method not implemented.");
+  public isEmpty() {
+    return this.length === 0;
   }
 
-  removeFromIndex(index: number): T {
-    throw new Error("Method not implemented.");
+  public lastIndexOf(obj: T) {
+    const index = this.toArray().lastIndexOf(obj);
+    return index;
   }
 
-  remove(obj: Object): boolean {
-    throw new Error("Method not implemented.");
+  public removeFromIndex(index: number) {
+    if (this.indexOutOfBounds(index)) {
+      throw new Error("Index out of bounds");
+    }
+
+    let currentNode = this.head;
+
+    this.length--;
+
+    if (index === 0) {
+      let aux = this.head.value;
+
+      this.head = currentNode.next;
+
+      return aux;
+    }
+
+    for (let i = 0; i < index - 1; i++) {
+      currentNode = currentNode.next;
+    }
+
+    const removedNode = currentNode.next;
+    currentNode.next = removedNode.next;
+
+    return removedNode.value;
   }
 
-  removeAll(elements: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public remove(object: T) {
+    if (this.isEmpty()) {
+      return false;
+    }
+
+    if (this.indexOf(object) === -1) {
+      return false;
+    }
+
+    let currentNode = this.head;
+
+    if (currentNode.value === object) {
+      this.head = currentNode.next;
+      this.length--;
+      return true;
+    }
+
+    while (currentNode.next) {
+      if (currentNode.next.value === object) {
+        currentNode.next = currentNode.next.next;
+        this.length--;
+        return true;
+      }
+
+      currentNode = currentNode.next;
+    }
+
+    return true;
   }
 
-  retainAll(elements: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public removeAll(elements: T[]) {
+    let removed = true;
+    elements.forEach(element => removed &&= this.remove(element));
+    return removed;
   }
 
-  set(index: number, element: T): T {
-    throw new Error("Method not implemented.");
+  public retainAll(elements: T[]): boolean {
+    const array = this.toArray();
+    const retained = array.filter(element => elements.includes(element));
+
+    this.clear();
+    this.addAll(retained);
+
+    return true;
   }
 
-  size(): number {
-    throw new Error("Method not implemented.");
+  public set(index: number, element: T) {
+    if (this.indexOutOfBounds(index)) {
+      throw new Error("Index out of bounds");
+    }
+
+    let currentNode = this.head;
+
+    for (let i = 0; i < index; i++) {
+      currentNode = currentNode.next;
+    }
+
+    const oldValue = currentNode.value;
+    currentNode.value = element;
+
+    return oldValue;
   }
 
-  toArray(): T[] {
-    throw new Error("Method not implemented.");
+  public size() {
+    return this.length;
+  }
+
+  public toArray() {
+    const array: T[] = [];
+
+    for (let i = 0; i < this.length; i++) {
+      array.push(this.get(i));
+    }
+
+    return array;
   }
 }
