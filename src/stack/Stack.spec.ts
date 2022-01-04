@@ -35,6 +35,12 @@ describe(Stack, () => {
     expect(stack.size()).toEqual(2);
   });
 
+  it('should throw an error when popping from an empty stack', () => {
+    const stack = new Stack<number>();
+
+    expect(() => stack.pop()).toThrow();
+  });
+
   it('should be able to search for an element', () => {
     const stack = new Stack<number>();
 
@@ -53,6 +59,12 @@ describe(Stack, () => {
     stack.push(3);
 
     expect(stack.peek()).toEqual(3);
+  });
+
+  it('should throw an exception when peeking at an empty stack', () => {
+    const stack = new Stack<number>();
+
+    expect(() => stack.peek()).toThrow();
   });
 
   it('should be able to test if the stack is empty', () => {
