@@ -1,5 +1,5 @@
 import { List } from "../interfaces/List";
-import { IndexOutOfBoundsException } from "./IndexOutOfBoundsException";
+import { IndexOutOfBoundsException } from "../exceptions/IndexOutOfBoundsException";
 import { Node } from "./Node";
 
 export class LinkedList<T> implements List<T> {

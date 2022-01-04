@@ -1,3 +1,4 @@
+import { IndexOutOfBoundsException } from "../exceptions/IndexOutOfBoundsException";
 import { List } from "../interfaces/List";
 
 export class ArrayList<T> implements List<T> {
@@ -48,7 +49,7 @@ export class ArrayList<T> implements List<T> {
 
   public get(index: number) {
     if (this.isIndexOutOfBounds(index)) {
-      throw new Error("Index out of bounds");
+      throw new IndexOutOfBoundsException(index);
     }
 
     return this.list[index];
@@ -68,7 +69,7 @@ export class ArrayList<T> implements List<T> {
 
   public removeFromIndex(index: number) {
     if (this.isIndexOutOfBounds(index)) {
-      throw new Error("Index out of bounds");
+      throw new IndexOutOfBoundsException(index);
     }
 
     const removed = this.list.splice(index, 1);
@@ -103,7 +104,7 @@ export class ArrayList<T> implements List<T> {
 
   public set(index: number, element: T) {
     if (this.isIndexOutOfBounds(index)) {
-      throw new Error("Index out of bounds");
+      throw new IndexOutOfBoundsException(index);
     }
 
     this.list[index] = element;

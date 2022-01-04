@@ -60,7 +60,7 @@ describe(ArrayList, () => {
     list.add(1);
 
     expect(list.get(0)).toBe(1);
-    expect(() => list.get(1)).toThrowError('Index out of bounds');
+    expect(() => list.get(1)).toThrow();
   });
 
   it('should be able to set an element', () => {
@@ -86,7 +86,7 @@ describe(ArrayList, () => {
     list.clear();
 
     expect(list.size()).toBe(0);
-    expect(() => list.get(0)).toThrowError('Index out of bounds');
+    expect(() => list.get(0)).toThrow();
   });
 
   it('should be able to check if an element is present in the list', () => {
