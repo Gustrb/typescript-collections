@@ -1,10 +1,19 @@
 {
-  "name": "collections",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "ts-javacollections",
+  "version": "1.0.10",
   "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "author": {
+    "name": "gustrb",
+    "email": "gustavoreisbauer@gmail.com"
+  },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "npm-publish": "yarn build && yarn publish"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
