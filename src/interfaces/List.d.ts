@@ -8,6 +8,7 @@ export interface List<T> {
   add(element: T): boolean;
 
   // Inserts the specified element at the specified position in this list (optional operation).
+  // Throws an exception if the index is out of range.
   addByIndex(index: number, element: T): void;
 
   // Appends all of the elements in the specified collection to the end of this list,
@@ -16,6 +17,7 @@ export interface List<T> {
 
   // Inserts all of the elements in the specified collection into this list
   // at the specified position (optional operation).
+  // Throws an exception if the index is out of range.
   addAllFromIndex(index: number, elements: T[]): boolean;
 
   // Removes all of the elements from this list (optional operation).
@@ -42,6 +44,7 @@ export interface List<T> {
   lastIndexOf(obj: T): number;
 
   // Removes the element at the specified position in this list (optional operation).
+  // Throws an exception if the index is out of range.
   removeFromIndex(index: number): T;
 
   // Removes the first occurrence of the specified element from this list, if it is present
@@ -58,6 +61,7 @@ export interface List<T> {
 
   // Replaces the element at the specified position in this list with the specified element
   // (optional operation).
+  // Throws an exception if the index is out of range.
   set(index: number, element: T): T;
 
   // Returns the number of elements in this list.

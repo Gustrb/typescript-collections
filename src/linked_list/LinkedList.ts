@@ -1,9 +1,6 @@
 import { List } from "../interfaces/List";
-
-class Node<T> {
-  public value: T;
-  public next: Node<T>;
-}
+import { IndexOutOfBoundsException } from "./IndexOutOfBoundsException";
+import { Node } from "./Node";
 
 export class LinkedList<T> implements List<T> {
   private head: Node<T>;
@@ -36,7 +33,7 @@ export class LinkedList<T> implements List<T> {
 
   public addByIndex(index: number, element: T) {
     if (this.indexOutOfBounds(index)) {
-      throw new Error("Index out of bounds");
+      throw new IndexOutOfBoundsException(index);
     }
 
     // create the new node
@@ -77,7 +74,7 @@ export class LinkedList<T> implements List<T> {
 
   public addAllFromIndex(index: number, elements: T[]) {
     if (index < 0) {
-      throw new Error("Index out of bounds");
+      throw new IndexOutOfBoundsException(index);
     }
 
     let actualIndex = index;
@@ -105,7 +102,7 @@ export class LinkedList<T> implements List<T> {
 
   public get(index: number): T {
     if (this.indexOutOfBounds(index)) {
-      throw new Error("Index out of bounds");
+      throw new IndexOutOfBoundsException(index);
     }
 
     let currentNode = this.head;
@@ -137,7 +134,7 @@ export class LinkedList<T> implements List<T> {
 
   public removeFromIndex(index: number) {
     if (this.indexOutOfBounds(index)) {
-      throw new Error("Index out of bounds");
+      throw new IndexOutOfBoundsException(index);
     }
 
     let currentNode = this.head;
@@ -210,7 +207,7 @@ export class LinkedList<T> implements List<T> {
 
   public set(index: number, element: T) {
     if (this.indexOutOfBounds(index)) {
-      throw new Error("Index out of bounds");
+      throw new IndexOutOfBoundsException(index);
     }
 
     let currentNode = this.head;
