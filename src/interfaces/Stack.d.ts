@@ -8,9 +8,11 @@ export interface Stackable<T> {
   empty(): boolean;
 
   // Looks at the object at the top of this stack without removing it from the stack.
+  // Throws EmptyStackException if this stack is empty.
   peek(): T;
 
   // Removes the object at the top of this stack and returns that object as the value of this function.
+  // Throws EmptyStackException if this stack is empty.
   pop(): T;
 
   // Pushes an item onto the top of this stack.
