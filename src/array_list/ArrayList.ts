@@ -1,75 +1,131 @@
 import { List } from "../interfaces/List";
 
 export class ArrayList<T> implements List<T> {
-  public add(element: T): boolean {
-    throw new Error("Method not implemented.");
+  private list: T[];
+
+  constructor() {
+    this.list = [];
   }
 
-  public addByIndex(index: number, element: T): void {
-    throw new Error("Method not implemented.");
+  public add(element: T) {
+    this.list.push(element);
+    return true;
   }
 
-  public addAll(elements: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public addByIndex(index: number, element: T) {
+    this.list.splice(index, 0, element);
+    return true;
   }
 
-  public addAllFromIndex(index: number, elements: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public addAll(elements: T[]) {
+    elements.forEach(element => this.add(element));
+    return true;
   }
 
-  public clear(): void {
-    throw new Error("Method not implemented.");
+  public addAllFromIndex(index: number, elements: T[]) {
+    let currentIndex = index;
+
+    elements.forEach(element => {
+      this.addByIndex(currentIndex, element);
+      currentIndex++;
+    });
+
+    return true;
   }
 
-  public contains(object: T): boolean {
-    throw new Error("Method not implemented.");
+  public clear() {
+    this.list = [];
   }
 
-  public containsAll(collection: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public contains(object: T) {
+    return this.list.includes(object);
   }
 
-  public get(index: number): T {
-    throw new Error("Method not implemented.");
+  public containsAll(collection: T[]) {
+    const contains = collection.every(element => this.contains(element));
+    return contains;
   }
 
-  public indexOf(obj: T): number {
-    throw new Error("Method not implemented.");
+  public get(index: number) {
+    if (this.isIndexOutOfBounds(index)) {
+      throw new Error("Index out of bounds");
+    }
+
+    return this.list[index];
   }
 
-  public isEmpty(): boolean {
-    throw new Error("Method not implemented.");
+  public indexOf(object: T) {
+    return this.list.indexOf(object);
   }
 
-  public lastIndexOf(obj: T): number {
-    throw new Error("Method not implemented.");
+  public isEmpty() {
+    return this.size() === 0;
   }
 
-  public removeFromIndex(index: number): T {
-    throw new Error("Method not implemented.");
+  public lastIndexOf(object: T) {
+    return this.list.lastIndexOf(object);
   }
 
-  public remove(obj: T): boolean {
-    throw new Error("Method not implemented.");
+  public removeFromIndex(index: number) {
+    if (this.isIndexOutOfBounds(index)) {
+      throw new Error("Index out of bounds");
+    }
+
+    const removed = this.list.splice(index, 1);
+    return removed[0];
   }
 
-  public removeAll(elements: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public remove(obj: T) {
+    const index = this.indexOf(obj);
+
+    if (index == -1) {
+      return false;
+    }
+
+    this.removeFromIndex(index);
+
+    return true;
   }
 
-  public retainAll(elements: T[]): boolean {
-    throw new Error("Method not implemented.");
+  public removeAll(elements: T[]) {
+    let removed = true;
+    elements.forEach(element => removed &&= this.remove(element));
+
+    return removed;
   }
 
-  public set(index: number, element: T): T {
-    throw new Error("Method not implemented.");
+  public retainAll(elements: T[]) {
+    const retained = this.list.filter(element => elements.includes(element));
+    this.list = retained;
+
+    return true;
   }
 
-  public size(): number {
-    throw new Error("Method not implemented.");
+  public set(index: number, element: T) {
+    if (this.isIndexOutOfBounds(index)) {
+      throw new Error("Index out of bounds");
+    }
+
+    this.list[index] = element;
+    return element;
   }
 
-  public toArray(): T[] {
-    throw new Error("Method not implemented.");
+  public size() {
+    return this.list.length;
+  }
+
+  public toArray() {
+    return this.getDeepCopiedList();
+  }
+
+  private getDeepCopiedList() {
+    // Nifty trick to deep copy an array
+    // Stringify the array, parse it, and return the result, for sure not the most
+    // optimal solution, but it works.
+    return JSON.parse(JSON.stringify(this.list));
+  }
+
+  private isIndexOutOfBounds(index: number) {
+    return index < 0 || index >= this.list.length;
   }
 }
