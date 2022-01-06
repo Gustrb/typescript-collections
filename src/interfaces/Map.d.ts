@@ -1,5 +1,10 @@
 import { Collection } from "./Collection";
 
+/**
+  An object that maps keys to values. A map cannot contain duplicate keys; each key can map to at most one value.
+  This interface takes the place of the Dictionary class, which was a totally abstract class rather than an interface.
+  Based on: https://docs.oracle.com/javase/8/docs/api/java/util/Map.html
+ */
 export interface Map<Key, Value> extends Collection<Value> {
 
   // Returns true if this map contains a mapping for the specified key.
