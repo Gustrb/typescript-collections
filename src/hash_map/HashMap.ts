@@ -2,7 +2,7 @@ import { KeyNotFoundException } from "../exceptions/KeyNotFoundException";
 import { Map } from "../interfaces/Map";
 
 export class HashMap<Key extends { toString() : string }, Value> implements Map<Key, Value> {
-  private innerMap: any = {};
+  private innerMap: { [key: string]: Value } = {};
 
   public containsKey(key: Key) {
     try {
