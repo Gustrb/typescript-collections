@@ -3,7 +3,9 @@
  * based on https://docs.oracle.com/javase/7/docs/api/java/util/List.html
  */
 
-export interface List<T> {
+import { Collection } from "./Collection";
+
+export interface List<T> extends Collection<T> {
   // Appends the specified element to the end of this list (optional operation).
   add(element: T): boolean;
 
@@ -20,9 +22,6 @@ export interface List<T> {
   // Throws an exception if the index is out of range.
   addAllFromIndex(index: number, elements: T[]): boolean;
 
-  // Removes all of the elements from this list (optional operation).
-  clear(): void;
-
   // Returns true if this list contains the specified element.
   contains(object: T): boolean;
 
@@ -35,9 +34,6 @@ export interface List<T> {
   // Returns the index of the first occurrence of the specified element
   // in this list, or -1 if this list does not contain the element.
   indexOf(obj: T ): number;
-
-  // Returns true if this list contains no elements.
-  isEmpty(): boolean;
 
   // Returns the index of the last occurrence of the specified element in this list,
   // or -1 if this list does not contain the element.
@@ -63,9 +59,6 @@ export interface List<T> {
   // (optional operation).
   // Throws an exception if the index is out of range.
   set(index: number, element: T): T;
-
-  // Returns the number of elements in this list.
-  size(): number;
 
   // Returns an array containing all of the elements in this list in proper sequence
   // (from first to last element).
